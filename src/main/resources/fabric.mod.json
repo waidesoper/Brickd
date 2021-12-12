@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "brickd",
+  "version": "${version}",
+  "name": "Brickd",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "GPL-3.0",
+  "icon": "assets/brickd/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "waidesoper.brickd.client.BrickdClient"
+    ],
+    "main": [
+      "waidesoper.brickd.Brickd"
+    ]
+  },
+  "mixins": [
+    "brickd.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.8",
+    "fabric": "*",
+    "minecraft": "1.18"
+  }
+}
