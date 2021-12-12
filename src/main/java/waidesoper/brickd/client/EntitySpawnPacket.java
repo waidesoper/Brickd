@@ -1,4 +1,4 @@
-package waidesoper.brickd.packet;
+package waidesoper.brickd.client;
 
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -14,63 +14,19 @@ public class EntitySpawnPacket {
     public static Packet<?> create(Entity e, Identifier packetID) {
 		if (e.world.isClient)
 			throw new IllegalStateException("SpawnPacketUtil.create called on the logical client!");
+
 		PacketByteBuf byteBuf = new PacketByteBuf(Unpooled.buffer());
 		byteBuf.writeVarInt(Registry.ENTITY_TYPE.getRawId(e.getType()));
 		byteBuf.writeUuid(e.getUuid());
 		byteBuf.writeVarInt(e.getId());
 
 		PacketBufUtil.writeVec3d(byteBuf, e.getPos());
-		PacketBufUtil.writeAngle(byteBuf, e.getPitch());
-		PacketBufUtil.writeAngle(byteBuf, e.getYaw());
+		byteBuf.writeFloat(e.getPitch());
+		byteBuf.writeFloat(e.getYaw());
 		return ServerPlayNetworking.createS2CPacket(packetID, byteBuf);
 	}
+
 	public static final class PacketBufUtil {
-
-		/**
-		 * Packs a floating-point angle into a {@code byte}.
-		 *
-		 * @param angle
-		 *         angle
-		 * @return packed angle
-		 */
-		public static byte packAngle(float angle) {
-			return (byte) MathHelper.floor(angle * 256 / 360);
-		}
-
-		/**
-		 * Unpacks a floating-point angle from a {@code byte}.
-		 *
-		 * @param angleByte
-		 *         packed angle
-		 * @return angle
-		 */
-		public static float unpackAngle(byte angleByte) {
-			return (angleByte * 360) / 256f;
-		}
-
-		/**
-		 * Writes an angle to a {@link PacketByteBuf}.
-		 *
-		 * @param byteBuf
-		 *         destination buffer
-		 * @param angle
-		 *         angle
-		 */
-		public static void writeAngle(PacketByteBuf byteBuf, float angle) {
-			byteBuf.writeByte(packAngle(angle));
-		}
-
-		/**
-		 * Reads an angle from a {@link PacketByteBuf}.
-		 *
-		 * @param byteBuf
-		 *         source buffer
-		 * @return angle
-		 */
-		public static float readAngle(PacketByteBuf byteBuf) {
-			return unpackAngle(byteBuf.readByte());
-		}
-
 		/**
 		 * Writes a {@link Vec3d} to a {@link PacketByteBuf}.
 		 *
