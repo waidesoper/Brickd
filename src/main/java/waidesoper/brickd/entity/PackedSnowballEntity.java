@@ -1,4 +1,4 @@
-package waidesoper.brickd.item.entity;
+package waidesoper.brickd.entity;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -22,8 +22,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import waidesoper.brickd.Brickd;
 import waidesoper.brickd.client.BrickdClient;
-import waidesoper.brickd.packet.EntitySpawnPacket;
-
+import waidesoper.brickd.client.EntitySpawnPacket;
 
 public class PackedSnowballEntity extends ThrownItemEntity {
     public PackedSnowballEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
@@ -46,7 +45,7 @@ public class PackedSnowballEntity extends ThrownItemEntity {
     @Environment(EnvType.CLIENT)
 	private ParticleEffect getParticleParameters() { // Not entirely sure, but probably has do to with the snowball's particles. (OPTIONAL)
 		ItemStack itemStack = this.getItem();
-		return (ParticleEffect)(itemStack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack));
+		return itemStack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack);
 	}
 
     @Environment(EnvType.CLIENT)
@@ -68,9 +67,9 @@ public class PackedSnowballEntity extends ThrownItemEntity {
 		entity.damage(DamageSource.thrownProjectile(this, this.getOwner()), (float)i); // deals damage
 
 		if (entity instanceof LivingEntity livingEntity) { // checks if entity is an instance of LivingEntity (meaning it is not a boat or minecart)
-			livingEntity.addStatusEffect((new StatusEffectInstance(StatusEffects.BLINDNESS, 20 * 3, 0))); // applies a status effect
-			livingEntity.addStatusEffect((new StatusEffectInstance(StatusEffects.SLOWNESS, 20 * 3, 2))); // applies a status effect
-			livingEntity.addStatusEffect((new StatusEffectInstance(StatusEffects.POISON, 20 * 3, 1))); // applies a status effect
+			livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 20 * 3, 0)); // applies a status effect
+			livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20 * 3, 2)); // applies a status effect
+			livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 20 * 3, 1)); // applies a status effect
 			livingEntity.playSound(SoundEvents.AMBIENT_CAVE, 2F, 1F); // plays a sound for the entity hit only
 		}
 	}
@@ -85,7 +84,7 @@ public class PackedSnowballEntity extends ThrownItemEntity {
 	}
 
 	@Override
-	public Packet createSpawnPacket() {
-		return EntitySpawnPacket.create(this, BrickdClient.PacketID);
+	public Packet<?> createSpawnPacket() {
+		return EntitySpawnPacket.create(this, Brickd.PacketID);
 	}
 }

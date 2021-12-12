@@ -10,7 +10,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import waidesoper.brickd.Brickd;
-import waidesoper.brickd.item.entity.PackedSnowballEntity;
+import waidesoper.brickd.entity.PackedSnowballEntity;
 
 public class PackedSnowballItem extends Item {
     public PackedSnowballItem(Settings settings) {
