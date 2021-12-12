@@ -24,7 +24,6 @@ import waidesoper.brickd.Brickd;
 import waidesoper.brickd.client.BrickdClient;
 import waidesoper.brickd.client.EntitySpawnPacket;
 
-
 public class PackedSnowballEntity extends ThrownItemEntity {
     public PackedSnowballEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
@@ -86,6 +85,6 @@ public class PackedSnowballEntity extends ThrownItemEntity {
 
 	@Override
 	public Packet<?> createSpawnPacket() {
-		return EntitySpawnPacket.create(this, BrickdClient.PacketID);
+		return EntitySpawnPacket.create(this, Brickd.PacketID);
 	}
 }

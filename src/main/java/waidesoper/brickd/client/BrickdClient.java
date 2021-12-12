@@ -21,12 +21,10 @@ import java.util.UUID;
 
 @Environment(EnvType.CLIENT)
 public class BrickdClient implements ClientModInitializer {
-    public static final Identifier PacketID = new Identifier(Brickd.ModID, "spawn_packet");
-
     @Override
     public void onInitializeClient() {
 		EntityRendererRegistry.register(Brickd.PackedSnowballEntityType, FlyingItemEntityRenderer::new);
-        ClientPlayNetworking.registerGlobalReceiver(PacketID, this::receiveEntityPacket);
+        ClientPlayNetworking.registerGlobalReceiver(Brickd.PacketID, this::receiveEntityPacket);
     }
 
     public void receiveEntityPacket(MinecraftClient minecraftClient, ClientPlayNetworkHandler handler, PacketByteBuf byteBuf, PacketSender responseSender) {

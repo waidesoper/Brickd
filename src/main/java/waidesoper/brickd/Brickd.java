@@ -14,6 +14,7 @@ import waidesoper.brickd.entity.PackedSnowballEntity;
 
 public class Brickd implements ModInitializer {
     public static final String ModID = "brickd";
+	public static final Identifier PacketID = new Identifier(Brickd.ModID, "spawn_packet");
 
 	public static final EntityType<PackedSnowballEntity> PackedSnowballEntityType = Registry.register(
 		Registry.ENTITY_TYPE,
